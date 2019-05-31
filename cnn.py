@@ -5,7 +5,6 @@ from tensorflow.python.keras.layers import Flatten
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
-
 # Constructing the Convolutional Neural Network
 classifier = Sequential()  # creating our object classifier, and setting it to the Sequential class
 
@@ -48,3 +47,5 @@ classifier.fit_generator(
         epochs=25,  # number of epochs we want to train in our CNN
         validation_data=test_set,
         validation_steps=800)
+
+
