@@ -3,18 +3,27 @@ from tensorflow.python.keras.layers import Convolution2D
 from tensorflow.python.keras.layers import MaxPooling2D
 from tensorflow.python.keras.layers import Flatten
 from tensorflow.python.keras.layers import Dense
+from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+
+import numpy as np
+from tensorflow.python.keras.preprocessing import image
 
 # Constructing the Convolutional Neural Network
 classifier = Sequential()  # creating our object classifier, and setting it to the Sequential class
 
-# Step 1 Classification
-classifier.add(Convolution2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)))
-
+classifier.add(Convolution2D(64, (3, 3), activation='relu', strides=(1, 1), input_shape=(64, 64, 3)))
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
+classifier.add(Convolution2D(64, (3, 3), activation='relu', strides=(1, 1), input_shape=(64, 64, 3)))
+classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
+classifier.add(Convolution2D(64, (3, 3), activation='relu', strides=(1, 1), input_shape=(64, 64, 3)))
+classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
 classifier.add(Flatten())
-classifier.add(Dense(units=1, input_dim=128, activation='relu', kernel_initializer="uniform"))
-classifier.add(Dense(units=1, activation='sigmoid', kernel_initializer="uniform"))
+classifier.add(Dense(units=128, activation='relu'))
+classifier.add(Dense(units=1, activation='sigmoid'))
 
 # Compiling the CNN
 classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
@@ -43,9 +52,20 @@ test_set = test_datagen.flow_from_directory(
 
 classifier.fit_generator(
         training_set,
-        steps_per_epoch=8000,  # number of images in our training set
+        steps_per_epoch=8000/32,  # number of images in our training set
         epochs=25,  # number of epochs we want to train in our CNN
         validation_data=test_set,
-        validation_steps=800)
+        validation_steps=2000/32)
 
+#def predict(filename):
+ #       test_image = image.load_img(filename, target_size=(64, 64))
+  #      test_image = image.img_to_array(test_image)
+   #     test_image = np.expand_dims(test_image, axis=0)
+    #    result = classifier.predict(test_image)
+     #   if result[0][0] == 1:
+      #          print('dog')
+       # else:
+        #        print('cat')
+
+classifier.save("dog_cat_class.h5")
 
