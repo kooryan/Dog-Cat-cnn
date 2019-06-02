@@ -1,6 +1,7 @@
 from tensorflow.python.keras.models import load_model
-import numpy as np
 from tensorflow.python.keras.preprocessing import image
+import numpy as np
+import cv2
 
 model = load_model('dog_cat_class.h5')
 
@@ -14,4 +15,21 @@ def predict(filename):
     else:
         print('cat')
 
-predict('download.jpg')
+cap = cv2.VideoCapture(0)
+
+currentFrame = 0
+
+while True:
+    ret, frame = cap.read()
+    cv2.imshow('frame', frame)
+
+    name = str(currentFrame) + '.jpg'
+    cv2.imwrite(name, frame)
+
+    predict(name)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
