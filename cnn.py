@@ -3,22 +3,18 @@ from tensorflow.python.keras.layers import Convolution2D
 from tensorflow.python.keras.layers import MaxPooling2D
 from tensorflow.python.keras.layers import Flatten
 from tensorflow.python.keras.layers import Dense
-from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
-
-import numpy as np
-from tensorflow.python.keras.preprocessing import image
 
 # Constructing the Convolutional Neural Network
 classifier = Sequential()  # creating our object classifier, and setting it to the Sequential class
 
-classifier.add(Convolution2D(64, (3, 3), activation='relu', strides=(1, 1), input_shape=(64, 64, 3)))
+classifier.add(Convolution2D(128, (3, 3), activation='relu', strides=(1, 1), input_shape=(128, 128, 3)))
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
-classifier.add(Convolution2D(64, (3, 3), activation='relu', strides=(1, 1), input_shape=(64, 64, 3)))
+classifier.add(Convolution2D(128, (3, 3), activation='relu', strides=(1, 1), input_shape=(128, 128, 3)))
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
-classifier.add(Convolution2D(64, (3, 3), activation='relu', strides=(1, 1), input_shape=(64, 64, 3)))
+classifier.add(Convolution2D(128, (3, 3), activation='relu', strides=(1, 1), input_shape=(128, 128, 3)))
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
 classifier.add(Flatten())
@@ -40,13 +36,13 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 
 training_set = train_datagen.flow_from_directory(
         'dataset/training_set',
-        target_size=(64, 64),
+        target_size=(128, 128),
         batch_size=32,
         class_mode='binary')
 
 test_set = test_datagen.flow_from_directory(
         'dataset/test_set',
-        target_size=(64, 64),
+        target_size=(128, 128),
         batch_size=32,
         class_mode='binary')  # since we have a binary outcome
 

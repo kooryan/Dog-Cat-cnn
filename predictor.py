@@ -17,13 +17,11 @@ def predict(filename):
 
 cap = cv2.VideoCapture(0)
 
-currentFrame = 0
-
 while True:
     ret, frame = cap.read()
     cv2.imshow('frame', frame)
 
-    name = str(currentFrame) + '.jpg'
+    name = 'image.jpg'
     cv2.imwrite(name, frame)
 
     predict(name)
@@ -31,5 +29,6 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+model.summary()
 cap.release()
 cv2.destroyAllWindows()
