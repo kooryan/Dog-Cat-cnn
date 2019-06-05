@@ -1,12 +1,12 @@
-from keras.models import load_model
-from keras.preprocessing import image
+from tensorflow.python.keras.models import load_model
+from tensorflow.python.keras.preprocessing import image
 import numpy as np
 import cv2
 
 model = load_model('dog_cat_classifier.h5')
 
 def predict(filename):
-    test_image = image.load_img(filename, target_size=(64, 64))
+    test_image = image.load_img(filename, target_size=(256, 256))
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
     result = model.predict(test_image)
