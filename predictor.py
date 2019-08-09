@@ -12,8 +12,11 @@ def predict(filename):
     result = model.predict(test_image)
     if result[0][0] == 1:
         print('dog')
-    else:
+    elif result[0][0] == 0:
         print('cat')
+    else:
+        print("None")
+
 
 cap = cv2.VideoCapture(0)
 

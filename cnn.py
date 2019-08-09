@@ -1,14 +1,15 @@
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Convolution2D, Dropout, BatchNormalization
-from tensorflow.python.keras.layers import MaxPooling2D
-from tensorflow.python.keras.layers import Flatten
-from tensorflow.python.keras.layers import Dense
+from keras.models import Sequential
+from keras.layers import Convolution2D, Dropout, BatchNormalization
+from keras.layers import MaxPooling2D
+from keras.layers import Flatten
+from keras.layers import Dense
 # from keras import optimizers
-from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+from keras.preprocessing.image import ImageDataGenerator
 
 from keras import backend as K
 from tensorflow.python.client import device_lib
 import tensorflow as tf
+
 
 print(device_lib.list_local_devices())
 sess = tf.compat.v1.Session()
@@ -61,13 +62,13 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 training_set = train_datagen.flow_from_directory(
         'dataset/training_set',
         target_size=(256, 256),
-        batch_size=64,
+        batch_size=32,
         class_mode='binary')
 
 test_set = test_datagen.flow_from_directory(
         'dataset/test_set',
         target_size=(256, 256),
-        batch_size=64,
+        batch_size=32,
         class_mode='binary')  # since we have a binary outcome
 
 classifier.fit_generator(
